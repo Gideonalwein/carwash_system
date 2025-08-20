@@ -4,4 +4,5 @@ numpy>=1.26.0
 plotly>=5.19.0
 xlsxwriter>=3.1.2
 openpyxl>=3.1.2
+matplotlib
 # sqlite3 is built-in with Python, no need to install separately

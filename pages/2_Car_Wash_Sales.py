@@ -114,14 +114,15 @@ if not df.empty:
             st.success(f"Sale {row['ID']} marked as Paid!")
             st.rerun()
 
-    # --- 🚨 Delete Transaction Buttons ---
-    st.subheader("🗑️ Delete Transactions")
-    for _, row in df.iterrows():
-        if st.button(f"Delete Sale {row['ID']}", key=f"delete_{row['ID']}"):
-            c.execute("DELETE FROM car_wash_sales WHERE id = ?", (row["ID"],))
-            conn.commit()
-            st.warning(f"Sale {row['ID']} deleted!")
-            st.rerun()
+    # --- 🚨 Delete Transaction by ID ---
+    st.subheader("🗑️ Delete Transaction by ID")
+
+    delete_id = st.number_input("Enter Sale ID to Delete", min_value=1, step=1)
+    if st.button("Delete Sale"):
+        c.execute("DELETE FROM car_wash_sales WHERE id = ?", (delete_id,))
+        conn.commit()
+        st.warning(f"Sale {delete_id} deleted (if it existed).")
+        st.rerun()
 
     # --- Daily Sales Summary ---
     st.subheader("📅 Daily Sales Summary")

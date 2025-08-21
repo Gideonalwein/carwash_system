@@ -114,6 +114,15 @@ if not df.empty:
             st.success(f"Sale {row['ID']} marked as Paid!")
             st.rerun()
 
+    # --- 🚨 Delete Transaction Buttons ---
+    st.subheader("🗑️ Delete Transactions")
+    for _, row in df.iterrows():
+        if st.button(f"Delete Sale {row['ID']}", key=f"delete_{row['ID']}"):
+            c.execute("DELETE FROM car_wash_sales WHERE id = ?", (row["ID"],))
+            conn.commit()
+            st.warning(f"Sale {row['ID']} deleted!")
+            st.rerun()
+
     # --- Daily Sales Summary ---
     st.subheader("📅 Daily Sales Summary")
     daily_summary = df.groupby("Date")["Price"].sum().reset_index()
